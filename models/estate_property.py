@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 from dateutil.relativedelta import relativedelta
-
+from odoo.exceptions import UserError
 from odoo.exceptions import ValidationError
 
 
@@ -74,3 +74,33 @@ class EstateProperty(models.Model):
           for record in self:
                prices = record.offer_ids.mapped('price')
                record.best_price = max(prices) if prices else 0.0
+
+     @api.onchange('garden')
+     def _compute_garden(self):
+          if self.garden == True:
+               self.garden_area = 10
+               self.garden_orientation = 'north'
+          else:
+               self.garden_area = 0
+               self.garden_orientation = False
+
+     def action_sold(self):
+          for record in self:
+               if record.state == 'canceled':
+                    raise UserError("A canceled property cannot be set as sold.")
+               record.state = 'sold'
+          return True
+
+     def action_cancel(self):
+          for record in self:
+               if record.state == 'sold':
+                    raise UserError("A sold property cannot be canceled.")
+               record.state = 'canceled'
+          return True
+
+
+
+     _check_expected_price = models.Constraint(
+          'CHECK(expected_price > 0)',
+          'Expected price must be strictly positive.',
+     )
