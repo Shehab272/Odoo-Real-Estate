@@ -16,3 +16,7 @@ class EstatePropertyType(models.Model):
           'A property type name must be unique.',
      )
 
+     _order = "sequence,name"
+
+     sequence = fields.Integer(string='Sequence', default=1)
+

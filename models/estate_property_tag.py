@@ -15,3 +15,8 @@ class estate_property_tag(models.Model):
           'UNIQUE(name)',
           'A property tag name must be unique.',
      )
+
+     
+     _order = "name"
+
+     color = fields.Integer(string='Color')

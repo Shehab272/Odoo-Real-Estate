@@ -8,6 +8,7 @@
       <field name="arch" type="xml">
         <list string="Properties Type">
           <field name="name"/>
+          <field name="sequence" widget="handle"/>
         </list>
       </field>
     </record>
@@ -17,7 +18,7 @@
       <field name="name">Estate Property Type Form</field>
       <field name="model">estate.property.type</field>
       <field name="arch" type="xml">
-        <form>
+        <form options="{'no_create': True, 'no_edit': True}">
           <sheet>
             <h1>
               <field name="name"/>

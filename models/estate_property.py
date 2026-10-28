@@ -125,3 +125,8 @@ class EstateProperty(models.Model):
                          "You must reduce the expected price if you want to accept this offer."
                     )
 
+
+     _order = "id desc"
+
+     sequence = fields.Integer('sequence',default=10)
+     _order = "sequence, name"

@@ -60,4 +60,6 @@ class EstatePropertyOffer(models.Model):
           'Price must be strictly positive.',
      )
 
+     _order = "price desc"
+
 
